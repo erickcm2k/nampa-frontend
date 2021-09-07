@@ -1,6 +1,8 @@
 import React from "react";
 import { AuthContext } from "../Auth/AuthContext";
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Text, Image } from "@chakra-ui/react";
+
+import logo from "../assets/Logo.png";
 
 const MainNavigation = () => {
   const loginDetails = React.useContext(AuthContext);
@@ -11,11 +13,11 @@ const MainNavigation = () => {
       h="75px"
       align="center"
       justify="space-between"
-      backgroundColor="teal.500"
+      backgroundColor="green.500"
     >
-      <Text ml="10px" fontWeight="bold" fontSize="1.8rem">
-        Nampa
-      </Text>
+      
+        <Image src={logo} width='200px' ></Image>
+     
 
       <Box display={{ base: "none", md: "block" }}>
         {loginDetails.isLoggedIn && (

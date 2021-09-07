@@ -1,4 +1,4 @@
-const baseUrl = "https://chat-backend-123.herokuapp.com/api";
+const baseUrl = "AQUIVATUURL";
 
 export const noTokenFetch = async (endpoint, data, method = "GET") => {
   const url = `${baseUrl}/${endpoint}`;

@@ -66,11 +66,11 @@ export const LoginPage = () => {
             onChange={onChange}
           />
 
-          <Button variant="ghost">
+          <Button variant="ghost" colorScheme='Blue.50'>
             <Link to="/auth/register">¿Nueva cuenta?</Link>
           </Button>
 
-          <Button type="submit" disabled={!completeFields()}>
+          <Button type="submit"  disabled={!completeFields()}>
             Ingresar
           </Button>
         </VStack>
