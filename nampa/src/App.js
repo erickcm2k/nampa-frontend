@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useCallback } from "react";
+import React, { useContext, useEffect } from "react";
 import { AuthContext } from "./Auth/AuthContext";
 import {
   BrowserRouter as Router,
@@ -8,35 +7,29 @@ import {
   Switch,
 } from "react-router-dom";
 
-import Home from "./Home/Pages/Home";
 import MainNavigation from "./Shared/MainNavigation";
+import Plants from "./Plants/Pages/Plants";
+import { LoginPage } from "./Auth/LoginPage";
+import { RegisterPage } from "./Auth/RegisterPage";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const login = useCallback(() => {
-    setIsLoggedIn(true);
-  }, []);
+  const { auth, checkLoginToken } = useContext(AuthContext);
 
-  const logout = useCallback(() => {
-    setIsLoggedIn(false);
-  }, []);
+  console.log(AuthContext);
+  useEffect(() => {
+    checkLoginToken();
+  }, [checkLoginToken]);
 
   let routes;
-  if (isLoggedIn) {
+  if (auth.logged) {
     routes = (
       <Switch>
-        <Route path="/" exact>
-          <div>Páginas a las que puedes acceder con sesión iniciada</div>
-        </Route>
-        {/* 
-        
-
+        <Route path="/" exact></Route>
+        {/*        
           Ver mis plantas -> Editar planta (cambiar campos de texto y foto de perfil)
-          Ver mi perfil -> Editar mi perfil (cambiar campos de texto y foto de perfil)
+          Ver mi perfil -> Editar mi perfil (cambiar campos de texto)
 
           Aparece cerrar sesión en la parte del navbar.
-          
-
         */}
         <Redirect to="/" />
       </Switch>
@@ -44,29 +37,23 @@ function App() {
   } else {
     routes = (
       <Switch>
-        <Route path="/" exact>
-          <Home />
-          <div>Necesitas iniciar sesión para ver esto</div>
+        <Route path="/auth/login" exact>
+          <LoginPage />
         </Route>
-        {/* 
-        
-        Pantalla de Home con una descripción de lo que es Nampa
-        
-        Accesos directos para login y para sign in
-        
-        */}
-        <Redirect to="/" />
+
+        <Route path="/auth/register" exact>
+          <RegisterPage />
+        </Route>
+        <Redirect to="/auth/login" />
       </Switch>
     );
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn: isLoggedIn, login, logout }}>
-      <Router>
-        <MainNavigation />
-        <main>{routes}</main>
-      </Router>
-    </AuthContext.Provider>
+    <Router>
+      <MainNavigation />
+      <main>{routes}</main>
+    </Router>
   );
 }
 
