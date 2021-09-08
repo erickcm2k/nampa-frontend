@@ -1,8 +1,8 @@
 import { Button } from "@chakra-ui/button";
-import { Flex, Box, Container, Input, Text, VStack } from "@chakra-ui/react";
-import React, { useContext, useEffect, useState } from "react";
+import { Container, Input, Text, VStack, Box } from "@chakra-ui/react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-
+import UI02 from "../assets/UI02.jpeg";
 import Swal from "sweetalert2";
 
 import { AuthContext } from "./AuthContext";
@@ -43,38 +43,40 @@ export const LoginPage = () => {
   };
 
   return (
-    <Container mt="5" p="5">
-      <form onSubmit={onSubmit}>
-        <VStack spacing={3}>
-          <Text fontSize="xl" fontWeight="bold" textAlign="center">
-            Inicia sesión en Nampa
-          </Text>
+    <Box backgroundImage={UI02} backgroundSize="100vw" height="100vh">
+      <Container p="5">
+        <form onSubmit={onSubmit}>
+          <VStack spacing={3}>
+            <Text fontSize="xl" fontWeight="bold" textAlign="center">
+              Inicia sesión en Nampa
+            </Text>
 
-          <Input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={form.username}
-            onChange={onChange}
-          />
+            <Input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={form.username}
+              onChange={onChange}
+            />
 
-          <Input
-            type="password"
-            name="password"
-            placeholder="Contraseña"
-            value={form.password}
-            onChange={onChange}
-          />
+            <Input
+              type="password"
+              name="password"
+              placeholder="Contraseña"
+              value={form.password}
+              onChange={onChange}
+            />
 
-          <Button variant="ghost" colorScheme='Blue.50'>
-            <Link to="/auth/register">¿Nueva cuenta?</Link>
-          </Button>
+            <Button variant="link" colorScheme='blue'>
+              <Link to="/auth/register">No tengo cuenta</Link>
+            </Button>
 
-          <Button type="submit"  disabled={!completeFields()}>
-            Ingresar
-          </Button>
-        </VStack>
-      </form>
-    </Container>
+            <Button type="submit" colorScheme='green' disabled={!completeFields()}>
+              Ingresar
+            </Button>
+          </VStack>
+        </form>
+      </Container>
+    </Box>
   );
 };

@@ -8,35 +8,15 @@ const initialState = {
   checking: true,
   logged: false,
   name: null,
-  email: null,
 };
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(initialState);
 
-  const login = async (email, password) => {
-    const resp = await noTokenFetch("login", { email, password }, "POST");
-
-    if (resp.ok) {
-      localStorage.setItem("token", resp.token);
-      const { user } = resp;
-
-      setAuth({
-        username: user.username,
-        checking: false,
-        logged: true,
-        name: user.name,
-        email: user.email,
-      });
-    }
-
-    return resp.ok;
-  };
-
-  const register = async (name, email, password) => {
+  const login = async (username, password) => {
     const resp = await noTokenFetch(
-      "login/new",
-      { name, email, password },
+      "api/users/login",
+      { username, password },
       "POST"
     );
 
@@ -49,7 +29,28 @@ export const AuthProvider = ({ children }) => {
         checking: false,
         logged: true,
         name: user.name,
-        email: user.email,
+      });
+    }
+
+    return resp.ok;
+  };
+
+  const register = async (name, username, password) => {
+    const resp = await noTokenFetch(
+      "api/users/signup",
+      { name, username, password },
+      "POST"
+    );
+
+    if (resp.ok) {
+      localStorage.setItem("token", resp.token);
+      const { user } = resp;
+
+      setAuth({
+        username: user.username,
+        checking: false,
+        logged: true,
+        name: user.name,
       });
 
       return true;
@@ -60,6 +61,7 @@ export const AuthProvider = ({ children }) => {
 
   const checkLoginToken = useCallback(async () => {
     const token = localStorage.getItem("token");
+
     // Si token no existe
     if (!token) {
       setAuth({
@@ -67,23 +69,22 @@ export const AuthProvider = ({ children }) => {
         checking: false,
         logged: false,
         name: null,
-        email: null,
       });
 
       return false;
     }
 
-    const resp = await tokenFetch("login/renew");
-    if (resp.ok) {
-      localStorage.setItem("token", resp.token);
-      const { usuario } = resp;
+    const resp = await tokenFetch("api/users/info", {}, "POST");
 
+    if (resp.checked) {
+      console.log(resp);
+      // const { user } = resp;
+      const { username, checked, name } = resp;
       setAuth({
-        username: usuario.username,
+        username: username,
         checking: false,
-        logged: true,
-        name: usuario.name,
-        email: usuario.email,
+        logged: checked,
+        name: name,
       });
 
       return true;
@@ -93,7 +94,6 @@ export const AuthProvider = ({ children }) => {
         checking: false,
         logged: false,
         name: null,
-        email: null,
       });
 
       return false;

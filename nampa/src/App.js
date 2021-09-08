@@ -8,30 +8,26 @@ import {
 } from "react-router-dom";
 
 import MainNavigation from "./Shared/MainNavigation";
-import Plants from "./Plants/Pages/Plants";
 import { LoginPage } from "./Auth/LoginPage";
 import { RegisterPage } from "./Auth/RegisterPage";
+import PlantsHome from "./Plants/Pages/PlantsHome";
 
 function App() {
   const { auth, checkLoginToken } = useContext(AuthContext);
 
-  console.log(AuthContext);
   useEffect(() => {
     checkLoginToken();
   }, [checkLoginToken]);
 
   let routes;
+
   if (auth.logged) {
     routes = (
       <Switch>
-        <Route path="/" exact></Route>
-        {/*        
-          Ver mis plantas -> Editar planta (cambiar campos de texto y foto de perfil)
-          Ver mi perfil -> Editar mi perfil (cambiar campos de texto)
-
-          Aparece cerrar sesión en la parte del navbar.
-        */}
-        <Redirect to="/" />
+        <Route exact path="/plantas">
+          <PlantsHome />
+        </Route>
+        <Redirect to="/plantas" />
       </Switch>
     );
   } else {
@@ -40,7 +36,6 @@ function App() {
         <Route path="/auth/login" exact>
           <LoginPage />
         </Route>
-
         <Route path="/auth/register" exact>
           <RegisterPage />
         </Route>

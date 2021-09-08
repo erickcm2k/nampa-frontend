@@ -2,8 +2,8 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Button } from "@chakra-ui/button";
-import { Flex, Box, Container, Input, Text, VStack } from "@chakra-ui/react";
-
+import { Container, Input, Text, VStack, Box } from "@chakra-ui/react";
+import UI02 from "../assets/UI02.jpeg";
 import { AuthContext } from "../Auth/AuthContext";
 
 export const RegisterPage = () => {
@@ -43,46 +43,48 @@ export const RegisterPage = () => {
   };
 
   return (
-    <Container mt="5" p="5">
-      <form onSubmit={onSubmit}>
-        <VStack spacing={3}>
-          <Text fontSize="xl" fontWeight="bold" textAlign="center">
-            Registro
-          </Text>
+    <Box backgroundImage={UI02} backgroundSize="100vw" height="100vh">
+      <Container p="5">
+        <form onSubmit={onSubmit}>
+          <VStack spacing={3}>
+            <Text fontSize="xl" fontWeight="bold" textAlign="center">
+              Registro
+            </Text>
 
-          <Input
-            type="text"
-            name="name"
-            placeholder="Nombre"
-            value={form.name}
-            onChange={onChange}
-          />
+            <Input
+              type="text"
+              name="name"
+              placeholder="Nombre"
+              value={form.name}
+              onChange={onChange}
+            />
 
-          <Input
-            type="username"
-            name="username"
-            placeholder="Username"
-            value={form.username}
-            onChange={onChange}
-          />
+            <Input
+              type="username"
+              name="username"
+              placeholder="Username"
+              value={form.username}
+              onChange={onChange}
+            />
 
-          <Input
-            type="password"
-            name="password"
-            placeholder="Contraseña"
-            value={form.password}
-            onChange={onChange}
-          />
+            <Input
+              type="password"
+              name="password"
+              placeholder="Contraseña"
+              value={form.password}
+              onChange={onChange}
+            />
 
-          <Button variant="ghost">
-            <Link to="/auth/login">¿Ya tienes cuenta?</Link>
-          </Button>
+            <Button variant="link" colorScheme='blue'>
+              <Link to="/auth/login">Ya tengo una cuenta</Link>
+            </Button>
 
-          <Button type="submit" disabled={!completeFields()}>
-            Crear cuenta
-          </Button>
-        </VStack>
-      </form>
-    </Container>
+            <Button type="submit" colorScheme='green' disabled={!completeFields()}>
+              Crear cuenta
+            </Button>
+          </VStack>
+        </form>
+      </Container>
+    </Box>
   );
 };

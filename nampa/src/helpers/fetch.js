@@ -1,4 +1,4 @@
-const baseUrl = "AQUIVATUURL";
+const baseUrl = "http://localhost:3001";
 
 export const noTokenFetch = async (endpoint, data, method = "GET") => {
   const url = `${baseUrl}/${endpoint}`;

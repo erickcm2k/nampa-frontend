@@ -1,36 +1,32 @@
 import React from "react";
 import { AuthContext } from "../Auth/AuthContext";
-import { Box, Button, Flex, Text, Image } from "@chakra-ui/react";
+import { HStack, Button, Flex, Text, Image } from "@chakra-ui/react";
 
 import logo from "../assets/Logo.png";
 
 const MainNavigation = () => {
   const loginDetails = React.useContext(AuthContext);
-  console.log(loginDetails);
+
   return (
     <Flex
       w="100%"
-      h="75px"
+      h="70px"
       align="center"
       justify="space-between"
-      backgroundColor="green.500"
+      backgroundColor="green.50"
     >
-      
-        <Image src={logo} width='200px' ></Image>
-     
+      <Image src={logo} width="180px"></Image>
 
-      <Box display={{ base: "none", md: "block" }}>
-        {loginDetails.isLoggedIn && (
+      {loginDetails.auth.logged && (
+        <HStack mr="4">
           <>
-            <Button ml="5" variant="ghost" onClick={() => loginDetails.logout}>
-              Nombre del perfil
-            </Button>
-            <Button ml="5" variant="ghost" onClick={() => loginDetails.logout}>
+            <Text fontSize="md">{loginDetails.auth.name}</Text>
+            <Button ml="5" variant="ghost" onClick={loginDetails.logout}>
               Cerrar sesión
             </Button>
           </>
-        )}
-      </Box>
+        </HStack>
+      )}
     </Flex>
   );
 };
