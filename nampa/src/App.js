@@ -11,6 +11,8 @@ import MainNavigation from "./Shared/MainNavigation";
 import { LoginPage } from "./Auth/LoginPage";
 import { RegisterPage } from "./Auth/RegisterPage";
 import PlantsHome from "./Plants/Pages/PlantsHome";
+import CreatePlant from "./Plants/Pages/CreatePlant";
+import UpdatePlant from "./Plants/Pages/UpdatePlant";
 
 function App() {
   const { auth, checkLoginToken } = useContext(AuthContext);
@@ -27,16 +29,23 @@ function App() {
         <Route exact path="/plantas">
           <PlantsHome />
         </Route>
+        <Route exact path="/newplant">
+          <CreatePlant />
+        </Route>
+        <Route exact path="/editplant/:plantId">
+          <UpdatePlant />
+        </Route>
+
         <Redirect to="/plantas" />
       </Switch>
     );
   } else {
     routes = (
       <Switch>
-        <Route path="/auth/login" exact>
+        <Route exact path="/auth/login">
           <LoginPage />
         </Route>
-        <Route path="/auth/register" exact>
+        <Route exact path="/auth/register">
           <RegisterPage />
         </Route>
         <Redirect to="/auth/login" />

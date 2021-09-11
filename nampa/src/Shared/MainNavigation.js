@@ -1,6 +1,7 @@
 import React from "react";
 import { AuthContext } from "../Auth/AuthContext";
-import { HStack, Button, Flex, Text, Image } from "@chakra-ui/react";
+import { HStack, Button, Flex, Text, Image, Box } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 import logo from "../assets/Logo.png";
 
@@ -20,6 +21,11 @@ const MainNavigation = () => {
       {loginDetails.auth.logged && (
         <HStack mr="4">
           <>
+            <Box>
+              <Link to="newplant">
+                <Button colorScheme="green">Nueva planta</Button>
+              </Link>
+            </Box>
             <Text fontSize="md">{loginDetails.auth.name}</Text>
             <Button ml="5" variant="ghost" onClick={loginDetails.logout}>
               Cerrar sesión

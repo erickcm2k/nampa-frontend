@@ -1,11 +1,11 @@
 import React from "react";
-import { Box, Text, Container, Flex } from "@chakra-ui/layout";
+import { Box, Text } from "@chakra-ui/layout";
 import Plants from "../Components/Plants";
-import UI05 from '../../assets/UI04.jpg'
+
 const PlantsHome = () => {
   return (
-    <Box maxWidth='1600px' backgroundImage={UI05} backgroundSize='cover'>
-      <Text textAlign="center" fontSize="2xl" fontWeight="bold">
+    <Box maxWidth="1300px" width="70%" margin="0 auto" mb="5">
+      <Text textAlign="center" fontSize="3xl" fontWeight="bold" py="3">
         Mis plantas
       </Text>
       <Plants />

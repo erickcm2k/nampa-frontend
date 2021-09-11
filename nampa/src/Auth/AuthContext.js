@@ -76,10 +76,9 @@ export const AuthProvider = ({ children }) => {
 
     const resp = await tokenFetch("api/users/info", {}, "POST");
 
-    if (resp.checked) {
-      console.log(resp);
+    if (resp.ok) {
       // const { user } = resp;
-      const { username, checked, name } = resp;
+      const { username, checked, name } = resp.token;
       setAuth({
         username: username,
         checking: false,
