@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Text, Button, Stack } from "@chakra-ui/react";
 import axios from "axios";
 import { Select } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 import Swal from "sweetalert2";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const UpdateHelper = (props) => {
   const [form, setForm] = useState({ ...props.oldData });
@@ -58,9 +58,9 @@ const UpdateHelper = (props) => {
       </Text>
       <form name="myForm" onSubmit={onSubmit} encType="multipart/form-data">
         <Stack spacing={3}>
-          <Text>Imagen de tu planta</Text>
+          <Text fontWeight="bold">Imagen de tu planta</Text>
           <Input type="file" name="image" />
-          <Text>Nombre</Text>
+          <Text fontWeight="bold">Nombre</Text>
           <Input
             type="text"
             name="nombre"
@@ -68,7 +68,7 @@ const UpdateHelper = (props) => {
             onChange={onChange}
             required={true}
           />
-          <Text>Especie</Text>
+          <Text fontWeight="bold">Especie</Text>
           <Input
             type="text"
             name="especie"
@@ -76,7 +76,7 @@ const UpdateHelper = (props) => {
             onChange={onChange}
             required={true}
           />
-          <Text>Tipo</Text>
+          <Text fontWeight="bold">Tipo</Text>
           <Select name="tipo" value={form.tipo} onChange={onChange}>
             <option value="Herbácea">Herbácea</option>
             <option value="Mata">Mata</option>
@@ -84,7 +84,7 @@ const UpdateHelper = (props) => {
             <option value="Árbol">Árbol</option>
             <option value="Cactácea">Cactácea</option>
           </Select>
-          <Text>Fecha de adquisición</Text>
+          <Text fontWeight="bold">Fecha de adquisición</Text>
           <input
             type="date"
             name="fecha_adquisicion"
@@ -92,13 +92,13 @@ const UpdateHelper = (props) => {
             onChange={onChange}
             required={true}
           />
-          <Text>Ubicación en casa</Text>
+          <Text fontWeight="bold">Ubicación en casa</Text>
           <Select name="ubicacion" value={form.ubicacion} onChange={onChange}>
             <option value="Jardín">Jardín</option>
             <option value="Maceta">Maceta</option>
             <option value="Pecera">Pecera</option>
           </Select>
-          <Text>Altura en centímetros</Text>
+          <Text fontWeight="bold">Altura en centímetros</Text>
           <Input
             type="number"
             name="alto"
@@ -106,7 +106,7 @@ const UpdateHelper = (props) => {
             onChange={onChange}
             required={true}
           />
-          <Text>Ancho en centímetros</Text>
+          <Text fontWeight="bold">Ancho en centímetros</Text>
           <Input
             type="number"
             name="ancho"
@@ -114,7 +114,7 @@ const UpdateHelper = (props) => {
             onChange={onChange}
             required={true}
           />
-          <Text>Frecuencia de riego en días</Text>
+          <Text fontWeight="bold">Frecuencia de riego en días</Text>
           <Input
             type="number"
             name="frecuencia_riego"
@@ -122,7 +122,7 @@ const UpdateHelper = (props) => {
             onChange={onChange}
             required={true}
           />
-          <Text>Luz requerida</Text>
+          <Text fontWeight="bold">Luz requerida</Text>
           <Select
             name="luz_requerida"
             value={form.luz_requerida}
@@ -132,7 +132,7 @@ const UpdateHelper = (props) => {
             <option value="Sombra">Sombra</option>
             <option value="Resolana">Resolana</option>
           </Select>
-          <Text>Comentario</Text>
+          <Text fontWeight="bold">Comentario</Text>
           <Input
             type="text"
             name="comentario"
