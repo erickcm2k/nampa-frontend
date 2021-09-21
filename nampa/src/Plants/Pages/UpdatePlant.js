@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { Container, Text, Button, Stack } from "@chakra-ui/react";
 import axios from "axios";
+import { Select } from "@chakra-ui/react";
+import { Input } from "@chakra-ui/react";
 import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
 import UpdateHelper from "./UpdateHelper";
@@ -20,9 +23,7 @@ const UpdatePlant = () => {
     axios
       .post(url, {}, config)
       .then((response) => {
-        const plant = response.data.plants.filter(
-          (p) => p.plant_id === plantId
-        );
+        const plant = response.data.plants.filter((p) => p.plant_id == plantId);
         setForm({ ...plant });
       })
       .catch((error) => {
@@ -39,7 +40,6 @@ const UpdatePlant = () => {
 
   useEffect(() => {
     getData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <>{form !== null && <UpdateHelper oldData={form[0]} />}</>;
