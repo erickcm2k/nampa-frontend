@@ -8,13 +8,20 @@ import {
 } from "react-router-dom";
 
 import MainNavigation from "./Shared/MainNavigation";
-import { LoginPage } from "./Auth/LoginPage";
-import { RegisterPage } from "./Auth/RegisterPage";
-import PlantsHome from "./Plants/Pages/PlantsHome";
-import CreatePlant from "./Plants/Pages/CreatePlant";
-import UpdatePlant from "./Plants/Pages/UpdatePlant";
+// import { LoginPage } from "./Auth/LoginPage";
+// import { RegisterPage } from "./Auth/RegisterPage";
+// import PlantsHome from "./Plants/Pages/PlantsHome";
+// import CreatePlant from "./Plants/Pages/CreatePlant";
+// import UpdatePlant from "./Plants/Pages/UpdatePlant";
 
-function App() {
+interface Auth {
+  username: String | null;
+  checking: Boolean;
+  logged: Boolean;
+  name: String | null;
+}
+
+const App: React.FC = () => {
   const { auth, checkLoginToken } = useContext(AuthContext);
 
   useEffect(() => {
@@ -26,7 +33,7 @@ function App() {
   if (auth.logged) {
     routes = (
       <Switch>
-        <Route exact path="/plantas">
+        {/* <Route exact path="/plantas">
           <PlantsHome />
         </Route>
         <Route exact path="/newplant">
@@ -34,8 +41,12 @@ function App() {
         </Route>
         <Route exact path="/editplant/:plantId">
           <UpdatePlant />
+        </Route> */}
+        <Route exact path="/plantas">
+          <div>
+            <h1>Autenticado!!!</h1>
+          </div>
         </Route>
-
         <Redirect to="/plantas" />
       </Switch>
     );
@@ -43,11 +54,12 @@ function App() {
     routes = (
       <Switch>
         <Route exact path="/auth/login">
-          <LoginPage />
+          <div>Hello</div>
+          {/* <LoginPage /> */}
         </Route>
-        <Route exact path="/auth/register">
+        {/* <Route exact path="/auth/register">
           <RegisterPage />
-        </Route>
+        </Route> */}
         <Redirect to="/auth/login" />
       </Switch>
     );
@@ -59,6 +71,6 @@ function App() {
       <main>{routes}</main>
     </Router>
   );
-}
+};
 
 export default App;

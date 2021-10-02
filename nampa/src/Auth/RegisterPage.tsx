@@ -1,18 +1,18 @@
-import { Button } from "@chakra-ui/button";
-import { Container, Input, Text, VStack, Box } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import UI02 from "../assets/UI02.jpeg";
 import Swal from "sweetalert2";
-
+import { Button } from "@chakra-ui/button";
+import { Container, Input, Text, VStack, Box } from "@chakra-ui/react";
+import UI02 from "../assets/UI02.jpeg";
 import { AuthContext } from "./AuthContext";
 
-export const LoginPage = () => {
-  const { login } = useContext(AuthContext);
+export const RegisterPage = () => {
+  const { register } = useContext(AuthContext);
 
   const [form, setForm] = useState({
     username: "",
     password: "",
+    name: "",
   });
 
   const onChange = ({ target }) => {
@@ -26,20 +26,20 @@ export const LoginPage = () => {
   const onSubmit = async (ev) => {
     ev.preventDefault();
 
-    const { username, password } = form;
-    const ok = await login(username, password);
+    const { username, password, name } = form;
+    const msg = await register(name, username, password);
 
-    if (!ok) {
-      Swal.fire(
-        "Error",
-        "Ha ocurrido un error, revise los campos e intente de nuevo.",
-        "error"
-      );
+    if (msg !== true) {
+      Swal.fire("Error", msg, "error");
     }
   };
 
   const completeFields = () => {
-    return form.username.length > 0 && form.password.length > 0 ? true : false;
+    return form.username.length > 0 &&
+      form.password.length > 0 &&
+      form.name.length > 0
+      ? true
+      : false;
   };
 
   return (
@@ -48,11 +48,19 @@ export const LoginPage = () => {
         <form onSubmit={onSubmit}>
           <VStack spacing={3}>
             <Text fontSize="xl" fontWeight="bold" textAlign="center">
-              Inicia sesión en Nampa
+              Registro
             </Text>
 
             <Input
               type="text"
+              name="name"
+              placeholder="Nombre"
+              value={form.name}
+              onChange={onChange}
+            />
+
+            <Input
+              type="username"
               name="username"
               placeholder="Username"
               value={form.username}
@@ -68,11 +76,11 @@ export const LoginPage = () => {
             />
 
             <Button variant="link" colorScheme='blue'>
-              <Link to="/auth/register">No tengo cuenta</Link>
+              <Link to="/auth/login">Ya tengo una cuenta</Link>
             </Button>
 
             <Button type="submit" colorScheme='green' disabled={!completeFields()}>
-              Ingresar
+              Crear cuenta
             </Button>
           </VStack>
         </form>
