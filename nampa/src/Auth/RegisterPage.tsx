@@ -6,7 +6,7 @@ import { Container, Input, Text, VStack, Box } from "@chakra-ui/react";
 import UI02 from "../assets/UI02.jpeg";
 import { AuthContext } from "./AuthContext";
 
-export const RegisterPage = () => {
+export const RegisterPage: React.FC = () => {
   const { register } = useContext(AuthContext);
 
   const [form, setForm] = useState({
@@ -15,22 +15,22 @@ export const RegisterPage = () => {
     name: "",
   });
 
-  const onChange = ({ target }) => {
-    const { name, value } = target;
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
     setForm({
       ...form,
       [name]: value,
     });
   };
 
-  const onSubmit = async (ev) => {
-    ev.preventDefault();
+  const onSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
     const { username, password, name } = form;
-    const msg = await register(name, username, password);
+    const ok = await register(name, username, password);
 
-    if (msg !== true) {
-      Swal.fire("Error", msg, "error");
+    if (!ok) {
+      Swal.fire("Error", 'msg', "error");
     }
   };
 

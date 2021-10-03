@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useState } from "react";
-import { tokenFetch, noTokenFetch } from "../helpers/fetch";
+import { tokenFetch } from "../helpers/fetch";
 import Swal from "sweetalert2";
 
 import axios from "axios";
@@ -12,7 +12,7 @@ interface Auth {
 
 interface AuthContextInterface {
   auth: Auth;
-  login: (username: string, password: string) => Promise<boolean>;
+  login: (username: string, password: string) => Promise<string>;
   register: (
     name: string,
     username: string,
@@ -20,6 +20,13 @@ interface AuthContextInterface {
   ) => Promise<boolean>;
   checkLoginToken: () => Promise<boolean>;
   logout: () => void;
+}
+
+interface LoginData {
+  message: string;
+  token: string;
+  user: { username: string; name: string };
+  ok: boolean;
 }
 
 export const AuthContext = createContext({} as AuthContextInterface);
@@ -31,24 +38,68 @@ const initialState: Auth = {
   name: null,
 };
 
-interface LoginData {
-  message: string;
-  token: string;
-  user: { username: string; name: string };
-  ok: boolean;
-}
-
 export const AuthProvider: React.FC = ({ children }) => {
   const [auth, setAuth] = useState(initialState);
 
-  const login = async (
+  const login = async (username: string, password: string): Promise<string> => {
+    const url = "http://localhost:3001/api/users/login";
+
+    const resp = await axios.post<LoginData>(url, { username, password });
+    console.log(resp);
+
+    if (!resp) {
+      return "El servicio no se encuentra disponible por el momento.";
+    }
+
+    if (resp.data.ok) {
+      const { user, token } = resp.data;
+      localStorage.setItem("token", token);
+      setAuth({
+        username: user.username,
+        checking: false,
+        logged: true,
+        name: user.name,
+      });
+      return "Inicio de sesión exitoso";
+    } else {
+      return resp.data.message;
+    }
+
+    // .then((resp) => {
+    //   console.log(resp.data);
+    //   if (resp.data.ok) {
+    //     localStorage.setItem("token", resp.data.token);
+    //     const { user } = resp.data;
+    //     setAuth({
+    //       username: user.username,
+    //       checking: false,
+    //       logged: true,
+    //       name: user.name,
+    //     });
+    //     return resp.data.message;
+    //   } else {
+    //     setAuth({
+    //       username: null,
+    //       checking: false,
+    //       logged: true,
+    //       name: null,
+    //     });
+    //     return resp.data.message;
+    //   }
+    // })
+    // .catch((error) => {
+    //   return error;
+    // });
+  };
+
+  const register = async (
+    name: string,
     username: string,
     password: string
   ): Promise<boolean> => {
-    const url = "http://localhost:3001/api/users/login";
-
+    const url = "http://localhost:3001/api/users/signup";
     await axios
-      .post<LoginData>(url, { username, password })
+      .post<LoginData>(url, { name, username, password })
       .then((resp) => {
         if (resp.data.ok) {
           localStorage.setItem("token", resp.data.token);
@@ -73,40 +124,12 @@ export const AuthProvider: React.FC = ({ children }) => {
       .catch((error) => {
         Swal.fire(
           "Error",
-          "Ha ocurrido un error. Inténtelo nuevamente más tarde",
+          "Ha ocurrido un error al crear tu cuenta. Inténtelo nuevamente más tarde",
           "error"
         );
         return false;
       });
     return true;
-  };
-
-  const register = async (
-    name: string,
-    username: string,
-    password: string
-  ): Promise<any> => {
-    const resp = await noTokenFetch(
-      "api/users/signup",
-      { name, username, password },
-      "POST"
-    );
-
-    if (resp.ok) {
-      localStorage.setItem("token", resp.token);
-      const { user } = resp;
-
-      setAuth({
-        username: user.username,
-        checking: false,
-        logged: true,
-        name: user.name,
-      });
-
-      return true;
-    }
-
-    return resp.msg;
   };
 
   const checkLoginToken = useCallback(async () => {

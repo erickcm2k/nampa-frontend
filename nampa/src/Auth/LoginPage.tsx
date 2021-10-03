@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 import { AuthContext } from "./AuthContext";
 
-export const LoginPage = () => {
+export const LoginPage: React.FC = () => {
   const { login } = useContext(AuthContext);
 
   const [form, setForm] = useState({
@@ -26,17 +26,18 @@ export const LoginPage = () => {
   const onSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    
     const { username, password } = form;
+
+    // const ok = await login(username, password);
+    console.log(await login(username, password));
     
-    const ok = await login(username, password);
-    if (!ok) {
-      Swal.fire(
-        "Error",
-        "Ha ocurrido un error, revise los campos e intente de nuevo.",
-        "error"
-      );
-    }
+    // if (!ok) {
+    //   Swal.fire(
+    //     "Error",
+    //     "Ha ocurrido un error, revise los campos e intente de nuevo.",
+    //     "error"
+    //   );
+    // }
   };
 
   const completeFields = () => {
