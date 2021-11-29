@@ -13,13 +13,14 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
 import { Link } from "react-router-dom";
-
+import { dateFormatter } from "../../utils/dateConversion";
 const Plant = (props) => {
+  const birthday = dateFormatter(props.plantData.fecha_adquisicion);
   const {
     plant_id: plantId,
     especie: specie,
     tipo: kind,
-    fecha_adquisicion: birthday,
+    // fecha_adquisicion: birthday,
     ubicacion: location,
     nombre: name,
     alto: height,
@@ -79,13 +80,7 @@ const Plant = (props) => {
   };
 
   return (
-    <Box
-      p="5"
-      m="2"
-      backgroundColor="gray.50"
-      borderRadius="10px"
-      boxShadow="0 3px 10px rgb(0 0 0 / 0.5)"
-    >
+    <Box p={3} backgroundColor="gray.50" borderRadius="1rem" boxShadow="lg">
       <Text
         textAlign="center"
         textTransform="capitalize"

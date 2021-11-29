@@ -1,10 +1,13 @@
 import { Button } from "@chakra-ui/button";
-import { Box, Grid, Text } from "@chakra-ui/layout";
+import { Box, Grid, Stack, Text } from "@chakra-ui/layout";
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import Plant from "./Plant";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Image } from "@chakra-ui/image";
+
+import newPlant from "../../assets/new_plant.svg";
 
 // const data = [
 //   {
@@ -74,9 +77,11 @@ import Swal from "sweetalert2";
 // ];
 
 const Plants = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
+  const [isLoading, setisLoading] = useState(false);
 
   const getData = async () => {
+    setisLoading(true);
     const url = "http://localhost:3001/api/plants/list";
     const token = localStorage.getItem("token") || "";
     const config = {
@@ -100,6 +105,7 @@ const Plants = () => {
           );
         }
       });
+    setisLoading(false);
   };
 
   useEffect(() => {
@@ -109,28 +115,45 @@ const Plants = () => {
   return (
     <>
       {data !== null && (
-        <Grid templateColumns="repeat(2, 1fr)" gap={6}>
-          {data.length !== 0 ? (
-            data.map((plant) => {
-              return (
-                <Box w="100%" key={plant.plant_id}>
-                  <Plant getData={getData} plantData={{ ...plant }}></Plant>
-                </Box>
-              );
-            })
-          ) : (
-            <>
-              <Box>
-                <Text>Aún no tienes plantas registradas...</Text>
-              </Box>
-              <Box>
-                <Link to="newplant">
-                  <Button colorScheme="green">Agregar una nueva planta</Button>
-                </Link>
-              </Box>
-            </>
+        <>
+          {data.length !== 0 && (
+            <Grid
+              templateColumns={[
+                "repeat(1, 1fr)",
+                "repeat(2, 1fr)",
+                "repeat(2, 1fr)",
+                "repeat(3, 1fr)",
+              ]}
+              gap={6}
+            >
+              {data.length !== 0 ? (
+                data.map((plant) => {
+                  return (
+                    <Box w="100%" key={plant.plant_id}>
+                      <Plant getData={getData} plantData={{ ...plant }}></Plant>
+                    </Box>
+                  );
+                })
+              ) : (
+                <>
+                  <Box w="100%"></Box>
+                  <Stack w="100%" spacing={6}>
+                    <Text fontSize="xl">
+                      Aún no tienes ninguna planta registrada.
+                    </Text>
+                    <Image src={newPlant}></Image>
+                    <Link to="newplant">
+                      <Button colorScheme="green">
+                        Agregar mi primer planta
+                      </Button>
+                    </Link>
+                  </Stack>
+                  <Box w="100%"></Box>
+                </>
+              )}
+            </Grid>
           )}
-        </Grid>
+        </>
       )}
     </>
   );

@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Text, Button, Stack } from "@chakra-ui/react";
 import axios from "axios";
-import { Select } from "@chakra-ui/react";
-import { Input } from "@chakra-ui/react";
 import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
 import UpdateHelper from "./UpdateHelper";
@@ -23,6 +20,7 @@ const UpdatePlant = () => {
     axios
       .post(url, {}, config)
       .then((response) => {
+        console.log(response);
         const plant = response.data.plants.filter((p) => p.plant_id == plantId);
         setForm({ ...plant });
       })

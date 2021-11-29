@@ -15,22 +15,18 @@ const MainNavigation = () => {
       align="center"
       justify="space-between"
       backgroundColor="green.50"
+      boxShadow="md"
     >
       <Image src={logo} width="180px"></Image>
 
       {loginDetails.auth.logged && (
         <HStack mr="4">
-          <>
-            <Box>
-              <Link to="newplant">
-                <Button colorScheme="green">Nueva planta</Button>
-              </Link>
-            </Box>
-            <Text fontSize="md">{loginDetails.auth.name}</Text>
-            <Button ml="5" variant="ghost" onClick={loginDetails.logout}>
-              Cerrar sesión
-            </Button>
-          </>
+          <Text fontSize="md" fontWeight="bold">
+            {loginDetails.auth.name}
+          </Text>
+          <Button ml="5" variant="ghost" onClick={loginDetails.logout}>
+            Cerrar sesión
+          </Button>
         </HStack>
       )}
     </Flex>

@@ -6,8 +6,13 @@ import { Input } from "@chakra-ui/react";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
 
+import { dateFormatter } from "../../utils/dateConversion";
+
 const UpdateHelper = (props) => {
-  const [form, setForm] = useState({ ...props.oldData });
+  const formattedDate = dateFormatter(props.oldData.fecha_adquisicion);
+  const initialState = { ...props.oldData, fecha_adquisicion: formattedDate };
+  const [form, setForm] = useState(initialState);
+  console.log(form);
 
   let history = useHistory();
 
@@ -54,7 +59,10 @@ const UpdateHelper = (props) => {
   return (
     <Container mt="3">
       <Text textAlign="center" fontWeight="bold" fontSize="2xl">
-        Ingresa los datos de tu nueva planta
+        Editar planta
+      </Text>
+      <Text textAlign="center" fontWeight="bold" fontSize="lg">
+        Ingresa los nuevos datos planta
       </Text>
       <form name="myForm" onSubmit={onSubmit} encType="multipart/form-data">
         <Stack spacing={3}>
