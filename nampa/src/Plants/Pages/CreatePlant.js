@@ -4,11 +4,11 @@ import axios from "axios";
 import { Select } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 import Swal from "sweetalert2";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const CreatePlant = () => {
   let history = useHistory();
-
+  const [isLoading, setisLoading] = useState(false);
   const [form, setForm] = useState({
     nombre: "",
     especie: "",
@@ -31,6 +31,7 @@ const CreatePlant = () => {
   };
 
   const onSubmit = async (ev) => {
+    setisLoading(true);
     ev.preventDefault();
     const myform = document.forms["myForm"];
     const fd = new FormData(myform);
@@ -69,6 +70,7 @@ const CreatePlant = () => {
           );
         }
       });
+    setisLoading(false);
   };
 
   return (
@@ -76,6 +78,9 @@ const CreatePlant = () => {
       <Text textAlign="center" fontWeight="bold" fontSize="2xl">
         Ingresa los datos de tu nueva planta
       </Text>
+      <Button>
+        <Link to="/plantas">Volver</Link>
+      </Button>
       <form name="myForm" onSubmit={onSubmit} encType="multipart/form-data">
         <Stack spacing={3}>
           <Text fontWeight="bold">Imagen de tu planta</Text>
@@ -160,9 +165,18 @@ const CreatePlant = () => {
             onChange={onChange}
             required={true}
           />
-          <Button type="submit" colorScheme="green">
-            Crear
-          </Button>
+          {isLoading ? (
+            <Button
+              isLoading
+              loadingText="Agregando planta..."
+              colorScheme="teal"
+              variant="outline"
+            ></Button>
+          ) : (
+            <Button type="submit" colorScheme="green">
+              Agregar planta
+            </Button>
+          )}
         </Stack>
       </form>
     </Container>

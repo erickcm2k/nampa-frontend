@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useState } from "react";
+import Swal from "sweetalert2";
 import { tokenFetch, noTokenFetch } from "../helpers/fetch";
 
 export const AuthContext = createContext();
@@ -75,6 +76,10 @@ export const AuthProvider = ({ children }) => {
     }
 
     const resp = await tokenFetch("api/users/info", {}, "POST");
+
+    if (!resp) {
+      Swal.fire({ icon: "error", title: "No se ha podido iniciar sesión" });
+    }
 
     if (resp.ok) {
       // const { user } = resp;

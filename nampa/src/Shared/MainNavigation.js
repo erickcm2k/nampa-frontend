@@ -14,7 +14,7 @@ const MainNavigation = () => {
       h="70px"
       align="center"
       justify="space-between"
-      backgroundColor="green.50"
+      backgroundColor="rgb(255,255,255)"
       boxShadow="md"
     >
       <Image src={logo} width="180px"></Image>

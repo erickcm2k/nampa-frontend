@@ -4,7 +4,7 @@ import axios from "axios";
 import { Select } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 import Swal from "sweetalert2";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { dateFormatter } from "../../utils/dateConversion";
 
@@ -12,7 +12,7 @@ const UpdateHelper = (props) => {
   const formattedDate = dateFormatter(props.oldData.fecha_adquisicion);
   const initialState = { ...props.oldData, fecha_adquisicion: formattedDate };
   const [form, setForm] = useState(initialState);
-  console.log(form);
+  const [isLoading, setisLoading] = useState(false);
 
   let history = useHistory();
 
@@ -25,6 +25,7 @@ const UpdateHelper = (props) => {
   };
 
   const onSubmit = async (ev) => {
+    setisLoading(true);
     ev.preventDefault();
     const myform = document.forms["myForm"];
     const fd = new FormData(myform);
@@ -40,8 +41,14 @@ const UpdateHelper = (props) => {
       .post(url, fd, config)
       .then((response) => {
         console.log(response);
-        Swal.fire("Todo bien", "Planta actualizada correctamente", "success");
-        history.goBack();
+        Swal.fire({
+          title: "Todo bien",
+          text: "Planta actualizada correctamente",
+          icon: "success",
+          showConfirmButton: true,
+        }).then(() => {
+          history.goBack();
+        });
       })
 
       .catch((error) => {
@@ -54,13 +61,17 @@ const UpdateHelper = (props) => {
           );
         }
       });
+    setisLoading(false);
   };
 
   return (
-    <Container mt="3">
+    <Container pt={3} pb={"2rem"}>
       <Text textAlign="center" fontWeight="bold" fontSize="2xl">
         Editar planta
       </Text>
+      <Button>
+        <Link to="/plantas">Volver</Link>
+      </Button>
       <Text textAlign="center" fontWeight="bold" fontSize="lg">
         Ingresa los nuevos datos planta
       </Text>
@@ -149,8 +160,20 @@ const UpdateHelper = (props) => {
             required={true}
           />
           <Button type="submit" colorScheme="green">
-            Crear
+            Actualizar datos
           </Button>
+          {!isLoading ? (
+            <Button
+              isLoading
+              loadingText="Actualizando datos..."
+              colorScheme="teal"
+              variant="outline"
+            ></Button>
+          ) : (
+            <Button type="submit" colorScheme="green">
+              Actualizar datos
+            </Button>
+          )}
         </Stack>
       </form>
     </Container>
