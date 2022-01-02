@@ -159,10 +159,7 @@ const UpdateHelper = (props) => {
             onChange={onChange}
             required={true}
           />
-          <Button type="submit" colorScheme="green">
-            Actualizar datos
-          </Button>
-          {!isLoading ? (
+          {isLoading ? (
             <Button
               isLoading
               loadingText="Actualizando datos..."
