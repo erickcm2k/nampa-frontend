@@ -129,7 +129,7 @@ const Plants = () => {
               {data.length !== 0 ? (
                 data.map((plant) => {
                   return (
-                    <Box w="100%" key={plant.plant_id}>
+                    <Box w="100%" key={plant.planta_id}>
                       <Plant getData={getData} plantData={{ ...plant }}></Plant>
                     </Box>
                   );

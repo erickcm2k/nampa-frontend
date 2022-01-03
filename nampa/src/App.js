@@ -48,7 +48,7 @@ function App() {
             <UpdatePlant />
           </Route>
 
-          <Redirect to="/areas" />
+          <Redirect to="/plantas" />
         </Box>
       </Switch>
     );

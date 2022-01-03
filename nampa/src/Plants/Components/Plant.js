@@ -17,19 +17,45 @@ import { dateFormatter } from "../../utils/dateConversion";
 const Plant = (props) => {
   const birthday = dateFormatter(props.plantData.fecha_adquisicion);
   const {
-    plant_id: plantId,
-    especie: specie,
-    tipo: kind,
-    // fecha_adquisicion: birthday,
-    ubicacion: location,
-    nombre: name,
-    alto: height,
-    ancho: width,
-    frecuencia_riego: irrigationFreq,
-    luz_requerida: requiredLight,
-    comentario: comment,
-    imagen_url: img,
+    planta_id,
+    nombre,
+    descripcion,
+    fecha_plantacion,
+    fecha_ultimo_cambio_mac,
+
+    area_id,
+    alto,
+    ancho,
+
+    sustrato,
+
+    usuario_id,
+    comentario,
+    imagen,
+    especie_id,
   } = props.plantData;
+
+  /**
+ * 
+ *       "planta_id": 3,
+      "nombre": "Gardenia",
+      "descripcion": "Una nueva planta",
+      "fecha_plantacion": "2021-09-06T05:00:00.000Z",
+      "fecha_ultimo_cambio_mac": "2021-09-06T05:00:00.000Z",
+      "edad": null,
+      "area_id": 4,
+      "alto": 120,
+      "ancho": 100,
+      "frecuencia_riego": null,
+      "sustrato": "Sustrato 1",
+      "salud": null,
+      "usuario_id": 4,
+      "comentario": "Esta es mi nueva planta",
+      "imagen": "https://firebasestorage.googleapis.com/v0/b/nampa-a8d60.appspot.com/o/41641183281610rose.jpeg?alt=media&token=d9c6a074-bd66-425c-8bfc-f30032bcd804",
+      "especie_id": 3
+    },
+ * 
+ */
 
   const deletePlant = () => {
     const MySwal = withReactContent(Swal);
@@ -43,7 +69,7 @@ const Plant = (props) => {
       confirmButtonText: "Sí",
     }).then((option) => {
       if (option.isConfirmed) {
-        const url = `http://localhost:3001/api/plants/delete/${plantId}`;
+        const url = `http://localhost:3001/api/plantas/delete/${planta_id}`;
         const token = localStorage.getItem("token") || "";
         const config = {
           headers: {
@@ -88,7 +114,7 @@ const Plant = (props) => {
         fontWeight="bold"
         color="teal"
       >
-        {name}
+        {nombre}
       </Text>
       <Flex flexDirection="column" pt="3">
         <Box
@@ -97,7 +123,7 @@ const Plant = (props) => {
           borderRadius="50%"
           overflow="hidden"
           margin="0 auto"
-          backgroundImage={`url("${img}")`}
+          backgroundImage={`url("${imagen}")`}
           backgroundPosition="center"
           backgroundSize="cover"
         ></Box>
@@ -109,31 +135,43 @@ const Plant = (props) => {
                   <Text fontWeight="bold">Especie</Text>
                 </Td>
                 <Td>
-                  <Text textTransform="capitalize">{specie}</Text>
+                  <Text textTransform="capitalize">{especie_id}</Text>
                 </Td>
               </Tr>
               <Tr>
                 <Td>
-                  <Text fontWeight="bold">Tipo</Text>
+                  <Text fontWeight="bold">Descripción</Text>
                 </Td>
                 <Td>
-                  <Text textTransform="capitalize">{kind}</Text>
-                </Td>
-              </Tr>
-              <Tr>
-                <Td>
-                  <Text fontWeight="bold">Fecha de adquisición</Text>
-                </Td>
-                <Td>
-                  <Text textTransform="capitalize">{birthday}</Text>
+                  <Text textTransform="capitalize">{descripcion}</Text>
                 </Td>
               </Tr>
               <Tr>
                 <Td>
-                  <Text fontWeight="bold">Ubicación en casa</Text>
+                  <Text fontWeight="bold">Fecha de plantación</Text>
                 </Td>
                 <Td>
-                  <Text textTransform="capitalize">{location}</Text>
+                  <Text textTransform="capitalize">
+                    {dateFormatter(fecha_plantacion)}
+                  </Text>
+                </Td>
+              </Tr>
+              <Tr>
+                <Td>
+                  <Text fontWeight="bold">Fecha de último cambio maceta</Text>
+                </Td>
+                <Td>
+                  <Text textTransform="capitalize">
+                    {dateFormatter(fecha_ultimo_cambio_mac)}
+                  </Text>
+                </Td>
+              </Tr>
+              <Tr>
+                <Td>
+                  <Text fontWeight="bold">Área</Text>
+                </Td>
+                <Td>
+                  <Text textTransform="capitalize">{area_id}</Text>
                 </Td>
               </Tr>
               <Tr>
@@ -141,7 +179,7 @@ const Plant = (props) => {
                   <Text fontWeight="bold">{`Altura (cm)`}</Text>
                 </Td>
                 <Td>
-                  <Text textTransform="capitalize">{height}</Text>
+                  <Text textTransform="capitalize">{alto}</Text>
                 </Td>
               </Tr>
               <Tr>
@@ -149,23 +187,23 @@ const Plant = (props) => {
                   <Text fontWeight="bold">{`Ancho (cm)`}</Text>
                 </Td>
                 <Td>
-                  <Text textTransform="capitalize">{width}</Text>
+                  <Text textTransform="capitalize">{ancho}</Text>
                 </Td>
               </Tr>
               <Tr>
                 <Td>
-                  <Text fontWeight="bold">{`Frecuencia de riego (días)`}</Text>
+                  <Text fontWeight="bold">{`Sustrato`}</Text>
                 </Td>
                 <Td>
-                  <Text textTransform="capitalize">{irrigationFreq}</Text>
+                  <Text textTransform="capitalize">{sustrato}</Text>
                 </Td>
               </Tr>
               <Tr>
                 <Td>
-                  <Text fontWeight="bold">Luz requerida</Text>
+                  <Text fontWeight="bold">Comentario</Text>
                 </Td>
                 <Td>
-                  <Text textTransform="capitalize">{requiredLight}</Text>
+                  <Text textTransform="capitalize">{comentario}</Text>
                 </Td>
               </Tr>
             </Tbody>
@@ -176,10 +214,10 @@ const Plant = (props) => {
         <Text textAlign="center" fontWeight="bold">
           Comentario
         </Text>
-        <Text textAlign="center">{comment}</Text>
+        <Text textAlign="center">{comentario}</Text>
       </Box>
       <Flex width="100%" flexDirection="row" justifyContent="space-evenly">
-        <Link to={`/editplant/${plantId}`}>
+        <Link to={`/editplant/${planta_id}`}>
           <Button variant="ghost" colorScheme="blue">
             Editar
           </Button>
