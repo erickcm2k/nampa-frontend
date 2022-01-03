@@ -8,7 +8,7 @@ const PlantsHome = () => {
   return (
     <Container
       minWidth={"70rem"}
-      maxWidth={"90rem"}
+      maxWidth={"70rem"}
       display="flex"
       flexDirection="column"
     >

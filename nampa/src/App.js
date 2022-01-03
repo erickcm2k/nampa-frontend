@@ -14,6 +14,7 @@ import { RegisterPage } from "./Auth/RegisterPage";
 import PlantsHome from "./Plants/Pages/PlantsHome";
 import CreatePlant from "./Plants/Pages/CreatePlant";
 import UpdatePlant from "./Plants/Pages/UpdatePlant";
+import HelpButton from "./Plants/Components/HelpButton";
 
 import { Box } from "@chakra-ui/react";
 
@@ -29,7 +30,9 @@ function App() {
   if (auth.logged) {
     routes = (
       <Switch>
-        <Box backgroundColor={'rgb(241,251,243)'}>
+        <Box backgroundColor={"rgb(241,251,243)"}>
+          <HelpButton />
+
           <Route exact path="/plantas">
             <PlantsHome />
           </Route>
