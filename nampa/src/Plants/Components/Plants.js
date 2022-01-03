@@ -82,7 +82,7 @@ const Plants = () => {
 
   const getData = async () => {
     setisLoading(true);
-    const url = "http://localhost:3001/api/plants/list";
+    const url = "http://localhost:3001/api/plantas/list";
     const token = localStorage.getItem("token") || "";
     const config = {
       headers: {

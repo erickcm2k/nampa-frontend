@@ -14,6 +14,8 @@ import { RegisterPage } from "./Auth/RegisterPage";
 import PlantsHome from "./Plants/Pages/PlantsHome";
 import CreatePlant from "./Plants/Pages/CreatePlant";
 import UpdatePlant from "./Plants/Pages/UpdatePlant";
+import AreasHome from "./Areas/Pages/AreasHome.js";
+import CreateArea from "./Areas/Pages/CreateArea"
 
 import { Box } from "@chakra-ui/react";
 
@@ -29,7 +31,13 @@ function App() {
   if (auth.logged) {
     routes = (
       <Switch>
-        <Box backgroundColor={'rgb(241,251,243)'}>
+        <Box backgroundColor={'rgb(241,251,243)'} height={"2000px"}>
+          <Route exact path="/areas">
+            <AreasHome />
+          </Route>
+          <Route exact path="/newarea">
+            <CreateArea />
+          </Route>
           <Route exact path="/plantas">
             <PlantsHome />
           </Route>
@@ -40,7 +48,7 @@ function App() {
             <UpdatePlant />
           </Route>
 
-          <Redirect to="/plantas" />
+          <Redirect to="/areas" />
         </Box>
       </Switch>
     );
